@@ -30,4 +30,17 @@ void ts_free_lock(void *ptr);
 void *ts_malloc_nolock(size_t size);
 void ts_free_nolock(void *ptr);
 
+space_t *first_malloc(size_t size);
+
+space_t *malloc_end(size_t size);
+
+void fit_in(space_t *curr);
+
+void free_space(void *ptr);
+
+void add_free(space_t *curr);
+void remove_free(space_t *curr);
+
+unsigned long get_data_segment_size();
+unsigned long get_data_segment_free_space_size();
 #endif
