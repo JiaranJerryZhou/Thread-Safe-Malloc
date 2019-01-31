@@ -25,6 +25,13 @@ space_t *free_head = NULL;
 
 space_t *tail = NULL;
 
+// no lock version
+__thread space_t *head_nolock = NULL;
+
+__thread space_t *free_head_nolock = NULL;
+
+__thread space_t *tail_nolock = NULL;
+
 // Thread Safe malloc/free: locking version
 void *ts_malloc_lock(size_t size);
 void ts_free_lock(void *ptr);
@@ -40,11 +47,16 @@ space_t *malloc_end(size_t size);
 space_t *malloc_end_nolock(size_t size);
 
 void fit_in(space_t *curr);
+void fit_in_nolock(space_t *curr);
 
 void free_space(void *ptr);
+void free_space_nolock(void *ptr);
 
 void add_free(space_t *curr);
 void remove_free(space_t *curr);
+
+void add_free_nolock(space_t *curr);
+void remove_free_nolock(space_t *curr);
 
 unsigned long get_data_segment_size();
 unsigned long get_data_segment_free_space_size();
