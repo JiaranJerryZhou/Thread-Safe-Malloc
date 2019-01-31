@@ -1,5 +1,6 @@
 #ifndef __MY_MALLOC_H__
 #define __MY_MALLOC_H__
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -13,6 +14,8 @@ struct space {
   struct space *free_prev;
 };
 typedef struct space space_t;
+
+pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 
 size_t node_size = sizeof(struct space);
 
@@ -31,8 +34,10 @@ void *ts_malloc_nolock(size_t size);
 void ts_free_nolock(void *ptr);
 
 space_t *first_malloc(size_t size);
+space_t *first_malloc_nolock(size_t size);
 
 space_t *malloc_end(size_t size);
+space_t *malloc_end_nolock(size_t size);
 
 void fit_in(space_t *curr);
 
